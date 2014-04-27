@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class MiningBeam : MonoBehaviour {
-	private bool mining = false;
+	public bool mining = false;
+
 	private float maxYScale = 2f;
 	private SpriteRenderer spriteRenderer;
 	private float mineTransitionTime = 5f;

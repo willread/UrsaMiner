@@ -4,10 +4,10 @@ using System.Collections;
 public class Asteroid : MonoBehaviour {
 	public GameObject orePrefab;
 
-	private float minDepth = 0.2f;
-	private float maxDepth = 0.4f;
-	private int minOre = 1;
-	private int maxOre = 15;
+	public float minDepth = 0.0f;
+	public float maxDepth = 0.0f;
+	public int minOre = 1;
+	public int maxOre = 15;
 
 	// Initialize a new asteroid
 
@@ -33,6 +33,7 @@ public class Asteroid : MonoBehaviour {
 
 			float randomDepth = Random.Range(minDepth, maxDepth);
 			randomPoint = Vector2.Lerp(randomPoint, Vector2.zero, randomDepth);
+			Debug.Log (randomDepth);
 
 			// Set position of ore
 
