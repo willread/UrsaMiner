@@ -31,6 +31,8 @@ public class ShipControls : MonoBehaviour {
 	public GameObject pressToContinue;
 	public GameObject logo;
 	public GameObject instructions;
+	public Texture oreStack;
+	public Font font;
 
 	void Start(){
 
@@ -72,7 +74,7 @@ public class ShipControls : MonoBehaviour {
 
 			// Control scanner
 
-			if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("s")){
+			if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("left shift") || Input.GetKeyDown("right shift")){
 				scanner.Scan(transform.position);
 			}
 
@@ -144,8 +146,22 @@ public class ShipControls : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		GUI.Label(new Rect(10, 10, 100, 25), "Thrust: " + thrust);
-		GUI.Label(new Rect(10, 25, 100, 25), "Ore: " + minedOre);
+		// GUI.Label(new Rect(10, 10, 100, 25), "Thrust: " + thrust);
+		// GUI.Label(new Rect(10, 25, 100, 25), "Ore: " + minedOre);
+
+		GUI.DrawTexture(new Rect(10, Screen.height - 110, 50, 100), oreStack);
+
+		GUIStyle scoreStyle = new GUIStyle ();
+		scoreStyle.font = font;
+		scoreStyle.fontSize = 30;
+		scoreStyle.normal.textColor = new Color (255f, 255f, 255f, 0.75f);
+		GUI.Label(new Rect(75, Screen.height - 80, 200, 30),  minedOre.ToString() + " ORE COLLECTED", scoreStyle);
+
+		GUIStyle hiScoreStyle = new GUIStyle ();
+		hiScoreStyle.font = font;
+		hiScoreStyle.fontSize = 18;
+		hiScoreStyle.normal.textColor = new Color (255f, 255f, 255f, 0.6f);
+		GUI.Label (new Rect (75, Screen.height - 50, 200, 20), PlayerPrefs.GetInt ("HiScore").ToString () + " HI SCORE", hiScoreStyle);
 
 		float mapWidth = Screen.width * miniMapWidth;
 		float mapHeight = Screen.height * miniMapHeight;
@@ -164,6 +180,8 @@ public class ShipControls : MonoBehaviour {
 			alive = false;
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
+
+			PlayerPrefs.SetInt("HiScore", minedOre);
 
 			pressToContinue.BroadcastMessage("Show");
 			logo.BroadcastMessage("Hide");
