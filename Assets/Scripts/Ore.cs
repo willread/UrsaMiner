@@ -60,12 +60,15 @@ public class Ore : MonoBehaviour {
 		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true && !beingMined){
 			beingMined = true;
 			mineStartTime =  Time.realtimeSinceStartup;
+			particleSystem.renderer.sortingLayerName = "E";
+			// particleSystem.Play();
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D collider){
 		if(collider.tag == "MiningBeam" && scanned){
 			beingMined = false;
+			// particleSystem.Stop();
 		}
 	}
 }

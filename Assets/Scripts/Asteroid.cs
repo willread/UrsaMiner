@@ -36,7 +36,7 @@ public class Asteroid : MonoBehaviour {
 
 			// Set position of ore
 
-			Vector3 randomPos = new Vector3(randomPoint.x, randomPoint.y, 0f);
+			Vector3 randomPos = new Vector3(randomPoint.x, randomPoint.y, -0.1f);
 			ore.transform.localPosition = randomPos;
 		}
 	}
