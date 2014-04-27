@@ -130,14 +130,14 @@ public class ShipControls : MonoBehaviour {
 		if(impact > survivableImpactForce && alive){
 			alive = false;
 			thrust = 0.0f;
+			Destroy(miningBeam.gameObject);
 
 			explosion.particleSystem.Play();
 
 			GameObject[] components = new GameObject[]{
 				leftThruster,
 				rightThruster,
-				body,
-				miningBeam.gameObject // Stop collider from interfering with body on death
+				body
 			};
 
 			foreach(GameObject g in components){
