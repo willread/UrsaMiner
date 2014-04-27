@@ -181,7 +181,9 @@ public class ShipControls : MonoBehaviour {
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
 
-			PlayerPrefs.SetInt("HiScore", minedOre);
+			if(minedOre > PlayerPrefs.GetInt ("HiScore")){
+				PlayerPrefs.SetInt("HiScore", minedOre);
+			}
 
 			pressToContinue.BroadcastMessage("Show");
 			logo.BroadcastMessage("Hide");
