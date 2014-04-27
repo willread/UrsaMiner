@@ -11,6 +11,8 @@ public class ShipControls : MonoBehaviour {
 	private float thrusterSpeed = 10f;
 	private float survivableImpactForce = 1500f;
 	private int minedOre = 0;
+	private float miniMapWidth = 0.15f;
+	private float miniMapHeight;
 
 	private bool alive = true;
 
@@ -24,12 +26,19 @@ public class ShipControls : MonoBehaviour {
 	public GameObject frontRightExhaust;
 	public GameObject backRightExhaust;
 	public GameObject explosion;
+	public Texture miniMapBackground;
+	public Camera miniMapCamera;
 
 	void Start(){
 
 		// Set sort order of particle systems
 
 		explosion.particleSystem.renderer.sortingLayerName = "E";
+
+		// Set size / position of minimap camera
+
+		miniMapHeight = miniMapWidth * miniMapCamera.aspect;
+		miniMapCamera.rect = new Rect (1f - miniMapWidth, 0f, miniMapWidth, miniMapHeight);
 	}
 
 	void Update(){
@@ -119,6 +128,12 @@ public class ShipControls : MonoBehaviour {
 	void OnGUI(){
 		GUI.Label(new Rect(10, 10, 100, 25), "Thrust: " + thrust);
 		GUI.Label(new Rect(10, 25, 100, 25), "Ore: " + minedOre);
+
+		float mapWidth = Screen.width * miniMapWidth;
+		float mapHeight = Screen.height * miniMapHeight;
+		GUI.DrawTexture(new Rect(Screen.width - mapWidth, Screen.height - mapHeight, mapWidth, mapHeight), miniMapBackground, ScaleMode.ScaleToFit, true, 1f);
+
+		miniMapCamera.Render();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision){
