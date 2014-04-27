@@ -141,13 +141,15 @@ public class ShipControls : MonoBehaviour {
 		frontRightExhaust.transform.localPosition = frontRightPos;
 	}
 
+	// Increment score
+
 	void MinedOre(){
 		minedOre ++;
 	}
 
 	void OnGUI(){
-		// GUI.Label(new Rect(10, 10, 100, 25), "Thrust: " + thrust);
-		// GUI.Label(new Rect(10, 25, 100, 25), "Ore: " + minedOre);
+
+		// Draw scores
 
 		GUI.DrawTexture(new Rect(10, Screen.height - 110, 50, 100), oreStack);
 
@@ -163,6 +165,8 @@ public class ShipControls : MonoBehaviour {
 		hiScoreStyle.normal.textColor = new Color (255f, 255f, 255f, 0.6f);
 		GUI.Label (new Rect (75, Screen.height - 50, 200, 20), PlayerPrefs.GetInt ("HiScore").ToString () + " HI SCORE", hiScoreStyle);
 
+		// Draw mini map
+
 		float mapWidth = Screen.width * miniMapWidth;
 		float mapHeight = Screen.height * miniMapHeight;
 		GUI.DrawTexture(new Rect(Screen.width - mapWidth, Screen.height - mapHeight, mapWidth, mapHeight), miniMapBackground, ScaleMode.ScaleToFit, true, 1f);
@@ -170,25 +174,39 @@ public class ShipControls : MonoBehaviour {
 		miniMapCamera.Render();
 	}
 
+	// Handle collisions
+
 	void OnCollisionEnter2D(Collision2D collision){
+
+		// Calculate impact force
+
 		float impact = rigidbody2D.velocity.x - collision.gameObject.rigidbody2D.velocity.x;
 		impact += rigidbody2D.velocity.y - collision.gameObject.rigidbody2D.velocity.y;
 		impact *= rigidbody2D.mass * collision.gameObject.rigidbody2D.mass;
 		impact = Mathf.Abs(impact);
+
+		// Check for impact above threshold
 
 		if(impact > survivableImpactForce && alive){
 			alive = false;
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
 
+			// Store hi score
+
 			if(minedOre > PlayerPrefs.GetInt ("HiScore")){
 				PlayerPrefs.SetInt("HiScore", minedOre);
 			}
 
+			// Show press to continue message
+
 			pressToContinue.BroadcastMessage("Show");
-			logo.BroadcastMessage("Hide");
+
+			// Show explosion
 
 			explosion.particleSystem.Play();
+
+			// Break up ship and animate parts
 
 			GameObject[] components = new GameObject[]{
 				leftThruster,
