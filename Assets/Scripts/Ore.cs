@@ -9,10 +9,11 @@ public class Ore : MonoBehaviour {
 	private Color transparent = new Color(1f, 1f, 1f, 0f);
 	private GameObject ship;
 	private bool beingMined = false;
-	private float miningSpeed = 1f;
+	private float miningSpeed = 30f;
 	private float pickupThreshold = 0.5f;
 	private SpriteRenderer spriteRenderer;
 	private float scanStartTime;
+	private float mineStartTime;
 	private float animTime = 1f;
 
 	void Start(){
@@ -31,7 +32,7 @@ public class Ore : MonoBehaviour {
 		// Drag ore toward ship with mining beam
 
 		if(beingMined){
-			transform.position = Vector3.Lerp(transform.position, ship.transform.position, miningSpeed * Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, ship.transform.position, (Time.realtimeSinceStartup - mineStartTime) / miningSpeed);
 
 			// Pick up ore when close enough
 			
@@ -56,8 +57,9 @@ public class Ore : MonoBehaviour {
 			renderer.material.color = new Color(255, 255, 255, 1f);
 		}
 
-		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true){
+		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true && !beingMined){
 			beingMined = true;
+			mineStartTime =  Time.realtimeSinceStartup;
 		}
 	}
 
