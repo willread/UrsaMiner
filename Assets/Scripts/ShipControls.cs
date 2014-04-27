@@ -10,6 +10,7 @@ public class ShipControls : MonoBehaviour {
 	private float maxVelocity = 5.5f;
 	private float thrusterSpeed = 10f;
 	private float survivableImpactForce = 1500f;
+	private int minedOre = 0;
 
 	private bool alive = true;
 
@@ -111,8 +112,13 @@ public class ShipControls : MonoBehaviour {
 		frontRightExhaust.transform.localPosition = frontRightPos;
 	}
 
+	void MinedOre(){
+		minedOre ++;
+	}
+
 	void OnGUI(){
 		GUI.Label(new Rect(10, 10, 100, 25), "Thrust: " + thrust);
+		GUI.Label(new Rect(10, 25, 100, 25), "Ore: " + minedOre);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision){

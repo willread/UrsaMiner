@@ -4,10 +4,10 @@ using System.Collections;
 public class Asteroid : MonoBehaviour {
 	public GameObject orePrefab;
 
-	private float minDepth = 0.1f;
-	private float maxDepth = 0.5f;
-	private int minOre = 2;
-	private int maxOre = 20;
+	private float minDepth = 0.2f;
+	private float maxDepth = 0.4f;
+	private int minOre = 1;
+	private int maxOre = 15;
 
 	// Initialize a new asteroid
 
