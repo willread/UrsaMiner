@@ -31,7 +31,7 @@ public class Ore : MonoBehaviour {
 
 		// Drag ore toward ship with mining beam
 
-		if(beingMined){
+		if(beingMined == true){
 			transform.position = Vector3.Lerp(transform.position, ship.transform.position, (Time.realtimeSinceStartup - mineStartTime) / miningSpeed);
 
 			// Pick up ore when close enough
@@ -51,6 +51,7 @@ public class Ore : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
+		Debug.Log (collider.tag);
 		if(collider.tag == "Scanner"){
 			scanned = true;
 			scanStartTime = Time.realtimeSinceStartup;
@@ -58,6 +59,7 @@ public class Ore : MonoBehaviour {
 		}
 
 		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true && !beingMined){
+			Debug.Log ("Starting to mine");
 			beingMined = true;
 			mineStartTime =  Time.realtimeSinceStartup;
 		}

@@ -16,7 +16,7 @@ public class ShipControls : MonoBehaviour {
 
 	private bool alive = true;
 	private float timeOfDeath;
-	private float timeBeforeReload = 2f;
+	private float timeBeforeReload = 0.7f;
 
 	public Scanner scanner;
 	public MiningBeam miningBeam;

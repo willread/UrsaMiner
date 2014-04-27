@@ -36,6 +36,7 @@ public class Scanner : MonoBehaviour {
 			spriteRenderer.color = Color.Lerp(spriteRenderer.color, opaque, (Time.realtimeSinceStartup - scanStartTime) / (scanTime / 4));
 		}else{
 			spriteRenderer.color = Color.Lerp(spriteRenderer.color, transparent, (Time.realtimeSinceStartup - scanStartTime) / (scanTime));
+			circleCollider.radius = Mathf.Lerp(circleCollider.radius, 0, (Time.realtimeSinceStartup - scanStartTime) / scanTime);
 		}
 
 		if(spriteRenderer.color == opaque){
