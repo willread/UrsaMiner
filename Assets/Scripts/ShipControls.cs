@@ -15,6 +15,8 @@ public class ShipControls : MonoBehaviour {
 	private float miniMapHeight;
 
 	private bool alive = true;
+	private float timeOfDeath;
+	private float timeBeforeReload = 2f;
 
 	public Scanner scanner;
 	public MiningBeam miningBeam;
@@ -93,7 +95,7 @@ public class ShipControls : MonoBehaviour {
 
 			// Restart game
 
-			if(Input.anyKey){
+			if(Input.anyKey && Time.timeSinceLevelLoad - timeOfDeath > timeBeforeReload){
 				Application.LoadLevel(Application.loadedLevel);
 			}
 
@@ -201,6 +203,7 @@ public class ShipControls : MonoBehaviour {
 			// Show press to continue message
 
 			pressToContinue.BroadcastMessage("Show");
+			timeOfDeath = Time.timeSinceLevelLoad;
 
 			// Show explosion
 
