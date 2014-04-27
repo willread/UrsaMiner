@@ -28,6 +28,9 @@ public class ShipControls : MonoBehaviour {
 	public GameObject explosion;
 	public Texture miniMapBackground;
 	public Camera miniMapCamera;
+	public GameObject pressToContinue;
+	public GameObject logo;
+	public GameObject instructions;
 
 	void Start(){
 
@@ -42,6 +45,13 @@ public class ShipControls : MonoBehaviour {
 	}
 
 	void Update(){
+		// Hide logo / instructions
+
+		if(Input.anyKeyDown){
+			logo.BroadcastMessage("Hide");
+			instructions.BroadcastMessage("Hide");
+		}
+
 		if(alive){
 
 			// Control angular thrust
@@ -62,7 +72,7 @@ public class ShipControls : MonoBehaviour {
 
 			// Control scanner
 
-			if(Input.GetMouseButton(0)){
+			if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("s")){
 				scanner.Scan(transform.position);
 			}
 
@@ -70,13 +80,21 @@ public class ShipControls : MonoBehaviour {
 
 			// TODO: Only when landed
 
-			if(Input.GetMouseButtonDown(1)){
+			if(Input.GetMouseButtonDown(1) || Input.GetKeyDown("space")){
 				miningBeam.Mine();
 			}
 
-			if(Input.GetMouseButtonUp(1)){
+			if(Input.GetMouseButtonUp(1) || Input.GetKeyUp("space")){
 				miningBeam.Stop();
 			}
+		}else{
+
+			// Restart game
+
+			if(Input.anyKey){
+				Application.LoadLevel(Application.loadedLevel);
+			}
+
 		}
 
 		// Animate thrusters
@@ -146,6 +164,9 @@ public class ShipControls : MonoBehaviour {
 			alive = false;
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
+
+			pressToContinue.BroadcastMessage("Show");
+			logo.BroadcastMessage("Hide");
 
 			explosion.particleSystem.Play();
 
