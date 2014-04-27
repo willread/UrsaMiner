@@ -33,7 +33,6 @@ public class Asteroid : MonoBehaviour {
 
 			float randomDepth = Random.Range(minDepth, maxDepth);
 			randomPoint = Vector2.Lerp(randomPoint, Vector2.zero, randomDepth);
-			Debug.Log (randomDepth);
 
 			// Set position of ore
 

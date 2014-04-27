@@ -60,7 +60,7 @@ public class ShipControls : MonoBehaviour {
 
 			// Control angular thrust
 
-			body.transform.Rotate (Vector3.forward * (-Input.GetAxis("Horizontal") * thrust / maxThrust * rotationSpeed * Time.deltaTime) ); 
+			transform.Rotate (Vector3.forward * (-Input.GetAxis("Horizontal") * thrust / maxThrust * rotationSpeed * Time.deltaTime) ); 
 			// rigidbody2D.AddTorque(-Input.GetAxis("Horizontal") * thrust * torqueSpeed * Time.deltaTime);
 
 			// Control velocity
@@ -186,6 +186,8 @@ public class ShipControls : MonoBehaviour {
 		impact += rigidbody2D.velocity.y - collision.gameObject.rigidbody2D.velocity.y;
 		impact *= rigidbody2D.mass * collision.gameObject.rigidbody2D.mass;
 		impact = Mathf.Abs(impact);
+
+		Debug.Log ("Impact:   " + impact);
 
 		// Check for impact above threshold
 
