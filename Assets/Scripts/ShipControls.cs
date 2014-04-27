@@ -130,7 +130,8 @@ public class ShipControls : MonoBehaviour {
 			GameObject[] components = new GameObject[]{
 				leftThruster,
 				rightThruster,
-				body
+				body,
+				miningBeam.gameObject // Stop collider from interfering with body on death
 			};
 
 			foreach(GameObject g in components){

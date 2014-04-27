@@ -35,6 +35,5 @@ public class MiningBeam : MonoBehaviour {
 	public void Stop(){
 		mining = false;
 		mineStopTime = Time.realtimeSinceStartup;
-
 	}
 }
