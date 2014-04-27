@@ -15,6 +15,8 @@ public class Ore : MonoBehaviour {
 	private float scanStartTime;
 	private float mineStartTime;
 	private float animTime = 1f;
+	public AudioClip scannerBlipClip;
+	public AudioClip pickupClip;
 
 	void Start(){
 		ship = GameObject.FindGameObjectWithTag("Ship");
@@ -39,6 +41,7 @@ public class Ore : MonoBehaviour {
 			if(Vector3.Distance(transform.position, ship.transform.position) <= pickupThreshold){
 				Destroy(gameObject);
 				ship.BroadcastMessage("MinedOre");
+				ship.audio.PlayOneShot(pickupClip, 1f);
 			}
 		}
 
@@ -50,11 +53,19 @@ public class Ore : MonoBehaviour {
 		}
 	}
 
+	void ScanAfterDelay(){
+		scanned = true;
+		scanStartTime = Time.realtimeSinceStartup;
+		renderer.material.color = new Color(255, 255, 255, 1f);
+		if(!ship.audio.isPlaying){
+			ship.audio.PlayOneShot(scannerBlipClip, 1f);
+		}
+	}
+	
 	void OnTriggerEnter2D(Collider2D collider){
-		if(collider.tag == "Scanner"){
-			scanned = true;
-			scanStartTime = Time.realtimeSinceStartup;
-			renderer.material.color = new Color(255, 255, 255, 1f);
+		if(collider.tag == "Scanner" && !scanned){
+			// Invoke("ScanAfterDelay", 0.1f);
+			ScanAfterDelay();
 		}
 
 		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true && !beingMined){

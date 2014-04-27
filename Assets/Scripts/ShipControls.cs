@@ -36,6 +36,10 @@ public class ShipControls : MonoBehaviour {
 	public Texture oreStack;
 	public Font font;
 
+	public AudioClip scannerClip;
+	public AudioClip explosionClip;
+	public AudioClip beamClip;
+
 	void Start(){
 
 		// Set sort order of particle systems
@@ -78,6 +82,7 @@ public class ShipControls : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("left shift") || Input.GetKeyDown("right shift")){
 				scanner.Scan(transform.position);
+				audio.PlayOneShot(scannerClip, 0.7F);
 			}
 
 			// Control mining beam
@@ -86,10 +91,16 @@ public class ShipControls : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(1) || Input.GetKeyDown("space")){
 				miningBeam.Mine();
+				audio.clip = beamClip;
+				audio.volume = 0.25f;
+				audio.loop = true;
+				audio.Play();
 			}
 
 			if(Input.GetMouseButtonUp(1) || Input.GetKeyUp("space")){
 				miningBeam.Stop();
+				audio.Stop();
+				audio.volume = 1f;
 			}
 		}else{
 
@@ -210,6 +221,7 @@ public class ShipControls : MonoBehaviour {
 			// Show explosion
 
 			explosion.particleSystem.Play();
+			audio.PlayOneShot(explosionClip, 1f);
 
 			// Break up ship and animate parts
 
