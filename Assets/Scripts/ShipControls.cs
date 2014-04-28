@@ -16,7 +16,7 @@ public class ShipControls : MonoBehaviour {
 
 	private bool alive = true;
 	private float timeOfDeath;
-	private float timeBeforeReload = 0.7f;
+	private float timeBeforeReload = 1.5f;
 
 	public Scanner scanner;
 	public MiningBeam miningBeam;
@@ -206,6 +206,7 @@ public class ShipControls : MonoBehaviour {
 			alive = false;
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
+			audio.Stop ();
 
 			// Store hi score
 
