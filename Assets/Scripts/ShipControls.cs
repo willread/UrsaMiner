@@ -11,7 +11,7 @@ public class ShipControls : MonoBehaviour {
 	private float thrusterSpeed = 10f;
 	private float survivableImpactForce = 1500f;
 	private int minedOre = 0;
-	private float miniMapWidth = 0.15f;
+	private float miniMapWidth = 0.20f;
 	private float miniMapHeight;
 
 	private bool alive = true;
@@ -207,6 +207,7 @@ public class ShipControls : MonoBehaviour {
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
 			audio.Stop ();
+			Camera.main.transform.parent = null;
 
 			// Store hi score
 
