@@ -44,7 +44,7 @@ public class ShipControls : MonoBehaviour {
 
 		// Set sort order of particle systems
 
-		explosion.particleSystem.renderer.sortingLayerName = "E";
+		explosion.GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingLayerName = "E";
 
 		// Set size / position of minimap camera
 
@@ -74,15 +74,15 @@ public class ShipControls : MonoBehaviour {
 
 			Vector3 newForce = Vector3.up * thrust * Time.deltaTime;
 			Vector3 relativeForce = body.transform.InverseTransformDirection(newForce);
-			rigidbody2D.AddForce(new Vector2(relativeForce.x * -1f, relativeForce.y));
+			GetComponent<Rigidbody2D>().AddForce(new Vector2(relativeForce.x * -1f, relativeForce.y));
 
-			rigidbody2D.velocity = Vector3.ClampMagnitude(rigidbody2D.velocity, maxVelocity);
+			GetComponent<Rigidbody2D>().velocity = Vector3.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, maxVelocity);
 
 			// Control scanner
 
 			if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("left shift") || Input.GetKeyDown("right shift")){
 				scanner.Scan(transform.position);
-				audio.PlayOneShot(scannerClip, 0.7F);
+				GetComponent<AudioSource>().PlayOneShot(scannerClip, 0.7F);
 			}
 
 			// Control mining beam
@@ -91,16 +91,16 @@ public class ShipControls : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(1) || Input.GetKeyDown("space")){
 				miningBeam.Mine();
-				audio.clip = beamClip;
-				audio.volume = 0.25f;
-				audio.loop = true;
-				audio.Play();
+				GetComponent<AudioSource>().clip = beamClip;
+				GetComponent<AudioSource>().volume = 0.25f;
+				GetComponent<AudioSource>().loop = true;
+				GetComponent<AudioSource>().Play();
 			}
 
 			if(Input.GetMouseButtonUp(1) || Input.GetKeyUp("space")){
 				miningBeam.Stop();
-				audio.Stop();
-				audio.volume = 1f;
+				GetComponent<AudioSource>().Stop();
+				GetComponent<AudioSource>().volume = 1f;
 			}
 		}else{
 
@@ -193,9 +193,9 @@ public class ShipControls : MonoBehaviour {
 
 		// Calculate impact force
 
-		float impact = rigidbody2D.velocity.x - collision.gameObject.rigidbody2D.velocity.x;
-		impact += rigidbody2D.velocity.y - collision.gameObject.rigidbody2D.velocity.y;
-		impact *= rigidbody2D.mass * collision.gameObject.rigidbody2D.mass;
+		float impact = GetComponent<Rigidbody2D>().velocity.x - collision.gameObject.GetComponent<Rigidbody2D>().velocity.x;
+		impact += GetComponent<Rigidbody2D>().velocity.y - collision.gameObject.GetComponent<Rigidbody2D>().velocity.y;
+		impact *= GetComponent<Rigidbody2D>().mass * collision.gameObject.GetComponent<Rigidbody2D>().mass;
 		impact = Mathf.Abs(impact);
 
 		Debug.Log ("Impact:   " + impact);
@@ -206,7 +206,7 @@ public class ShipControls : MonoBehaviour {
 			alive = false;
 			thrust = 0.0f;
 			Destroy(miningBeam.gameObject);
-			audio.Stop ();
+			GetComponent<AudioSource>().Stop ();
 			Camera.main.transform.parent = null;
 
 			// Store hi score
@@ -222,8 +222,8 @@ public class ShipControls : MonoBehaviour {
 
 			// Show explosion
 
-			explosion.particleSystem.Play();
-			audio.PlayOneShot(explosionClip, 1f);
+			explosion.GetComponent<ParticleSystem>().Play();
+			GetComponent<AudioSource>().PlayOneShot(explosionClip, 1f);
 
 			// Break up ship and animate parts
 

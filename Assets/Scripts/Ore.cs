@@ -20,7 +20,7 @@ public class Ore : MonoBehaviour {
 
 	void Start(){
 		ship = GameObject.FindGameObjectWithTag("Ship");
-		renderer.material.color = transparent;
+		GetComponent<Renderer>().material.color = transparent;
 		transform.localScale = new Vector3(1f, 1f, 1f);
 
 		// Set random sprite
@@ -41,7 +41,7 @@ public class Ore : MonoBehaviour {
 			if(Vector3.Distance(transform.position, ship.transform.position) <= pickupThreshold){
 				Destroy(gameObject);
 				ship.BroadcastMessage("MinedOre");
-				ship.audio.PlayOneShot(pickupClip, 1f);
+				ship.GetComponent<AudioSource>().PlayOneShot(pickupClip, 1f);
 			}
 		}
 
@@ -56,9 +56,9 @@ public class Ore : MonoBehaviour {
 	void ScanAfterDelay(){
 		scanned = true;
 		scanStartTime = Time.realtimeSinceStartup;
-		renderer.material.color = new Color(255, 255, 255, 1f);
-		if(!ship.audio.isPlaying){
-			ship.audio.PlayOneShot(scannerBlipClip, 1f);
+		GetComponent<Renderer>().material.color = new Color(255, 255, 255, 1f);
+		if(!ship.GetComponent<AudioSource>().isPlaying){
+			ship.GetComponent<AudioSource>().PlayOneShot(scannerBlipClip, 1f);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class Ore : MonoBehaviour {
 		if(collider.tag == "MiningBeam" && scanned && collider.GetComponent<MiningBeam>().mining == true && !beingMined){
 			beingMined = true;
 			mineStartTime =  Time.realtimeSinceStartup;
-			particleSystem.renderer.sortingLayerName = "E";
+			GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingLayerName = "E";
 			// particleSystem.Play();
 		}
 	}

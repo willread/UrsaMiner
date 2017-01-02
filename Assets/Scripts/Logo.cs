@@ -10,10 +10,10 @@ public class Logo : MonoBehaviour {
 
 	void Start(){
 		gameObject.AddComponent<Rigidbody2D>();
-		rigidbody2D.gravityScale = 0f;
-		rigidbody2D.mass = 1f;
-		rigidbody2D.AddForce(Random.insideUnitSphere * 2f);
-		rigidbody2D.AddTorque(Random.Range(-50f, 50f));
+		GetComponent<Rigidbody2D>().gravityScale = 0f;
+		GetComponent<Rigidbody2D>().mass = 1f;
+		GetComponent<Rigidbody2D>().AddForce(Random.insideUnitSphere * 2f);
+		GetComponent<Rigidbody2D>().AddTorque(Random.Range(-50f, 50f));
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 	}
 	

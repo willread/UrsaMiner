@@ -26,7 +26,7 @@ public class Asteroid : MonoBehaviour {
 
 			// Pick a random point along the outside of the asteroid collider
 
-			PolygonCollider2D p = (PolygonCollider2D)collider2D;
+			PolygonCollider2D p = (PolygonCollider2D)GetComponent<Collider2D>();
 			Vector2 randomPoint = p.points[Random.Range (0, p.points.Length)];
 
 			// Move it to a random depth in the specified range
